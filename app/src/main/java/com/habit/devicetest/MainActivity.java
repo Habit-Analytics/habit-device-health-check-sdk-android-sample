@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         DeviceHealth.performTests(this, this,
-                "519f6955-31d7-49f5-8e49-197491c8d05d",
-                "x7e1pfbbalc7c4jsc9uscpbhswp2qvz7hajgtw6ticm5krdx4okqw0pqttejx1g3",
+                "",
+                "",
                 "",
                 testsToPerform, new TestCallback() {
 
