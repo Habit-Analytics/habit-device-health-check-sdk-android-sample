@@ -30,6 +30,7 @@ To integrate the Device Health SDK you will need request the **DeviceHealth.aar*
         implementation 'com.budiyev.android:code-scanner:2.1.0'
         implementation 'com.jakewharton:butterknife:10.2.3'
         implementation 'com.intuit.sdp:sdp-android:1.0.4'
+        implementation 'com.scottyab:rootbeer-lib:0.1.0'
     ```
 
 3. Click Sync Now button to rebuild the gradle.
@@ -64,23 +65,83 @@ In order to provide for a smoother transition between the app and the test scree
 // this -> Context
     DeviceHealth.setThemeColor(this, Color.argb(255, 156, 34, 93));
 ```
+ <br/>
+
+ ### **Hide Start Screen**
+Also, to provide a smoother transition between the app and the test screens it is possible to hide the SDK's start screen in case you want to show a custom in-app screen. Make sure you change this setting before starting to perform the tests.
+
+```java
+// Hiding the Start screen
+
+    DeviceHealth.hideStartScreen(true);
+```
+ <br/><br/> 
+
+## Customization
+In order to achieve a seamingless integration of the SDK, we've created customization features that allow you to customize the SDK in a way that fits in better with your app.
+
+ ### **General customization**
+The following general UI customizations can be done:
+```java
+
+      Customization customization = new Customization();
+
+      ButtonStyle buttonStyle = new ButtonStyle();
+      buttonStyle.setBackgroundColor(Color.rgb(255, 255, 0));
+      buttonStyle.setForegroundColor(Color.rgb(255, 0, 0));
+      buttonStyle.setBorderType(BorderType.Square);
+      customization.setButtonsStyle(buttonStyle);
+
+      customization.setSkipTestButtonColor(Color.rgb(0, 0, 0));
+      customization.setProgressBarBackgroundColor(Color.rgb(255, 255, 255));
+      customization.setProgressBarSelectedColor(Color.rgb(0, 0, 0));
+      customization.setCustomNavigationBarBackgroundColor(Color.rgb(99, 5, 220));
+      customization.setCustomNavigationBarTextColor(Color.rgb(0, 0, 0));
+      customization.setCustomNavigationBarButtonsTextColor(Color.rgb(255, 255, 255));
+```
+ <br/>
+
+ ### **Screen customization**
+Screens can be customized individually by creating CustomizableScreens and adding them to the Customization parameter. In the following snippet you can see an example on how to customize the Start Screen.
+
+```java
+
+      Customization customization = new Customization();
+
+      Map<String, String> customStartCopy = new HashMap<>();
+      customStartCopy.put(ScreenCustomizationKeys.start_screen.Copy.title, "My custom title");
+      customStartCopy.put(ScreenCustomizationKeys.start_screen.Copy.description, "My custom description");
+
+      Map<String, Drawable> images = new HashMap<>();
+      // kitten image
+      images.put(ScreenCustomizationKeys.start_screen.Elements.image, context.getDrawable(R.drawable.kitten));
+
+      CustomizableScreen screen = new CustomizableScreen();
+      screen.screenType = ScreenType.start_screen;
+      screen.backgroundColor = Color.rgb(255, 0, 0);
+      screen.textAccentColor = Color.rgb(255, 255, 0);
+      screen.textColor = Color.rgb(255, 255, 255);
+      screen.images = images;
+      screen.copyStrings = customStartCopy;
+
+      CustomizableScreen[] customScreens = new CustomizableScreen[] {
+        screen
+      };
+      customization.setCustomScreens(customScreens);
+```
  <br/><br/> 
 
 ## Tests Selection
-The tests to perform should be passed as a parameter in an array of strings. The available tests can be obtained using **TestType** as seen in the following snippet. _The order in which the tests are presented is the same order as they are defined in the array._
+The tests to perform should be passed as a parameter in an array of strings. The available tests can be obtained using **ScreenType** as seen in the following snippet. _The order in which the tests are presented is the same order as they are defined in the array._
 If no tests are passed as a parameter, then it is assumed that all supported tests will be performed.
 
 ```java
-     String[] testsToPerform = new String[]{
-                TestType.buttons_v1,
-                TestType.multi_touch_v1,
-                TestType.charging_v1,
-                TestType.speaker_recording_v1,
-                TestType.earspeaker_v1,
-                TestType.loudspeaker_v1,
-                TestType.read_text_v1,
-                TestType.device_front_video_v1
-        };
+      String[] testsToPerform = new String[]{
+              ScreenType.buttons_v2,
+              ScreenType.charging_v2,
+              ScreenType.multi_touch_v2,
+              ScreenType.device_front_video_v2
+      };
 ```
 
 
@@ -95,7 +156,7 @@ You can optionally pass the IMEI of the device via parameter but otherwise the S
 
 ```java
 // this -> Context, this -> Activity
-DeviceHealth.performTests(this, this, "<-your app id->", "<-your api key->", "<-device IMEI->", testsToPerform, new TestCallback() {
+DeviceHealth.performTests(this, this, "<-your app id->", "<-your api key->", "<-serial number->", "<-device IMEI->", testsToPerform, new TestCallback() {
             @Override
             public void onResponse(JSONObject obj) {
 		
@@ -120,7 +181,7 @@ If you wish to only obtain information about the device without running any test
 ```java
 // this -> Context, this -> Activity
 
-  DeviceHealth.getDeviceInfo(this, this, new DeviceInfoCallback() {
+  DeviceHealth.getDeviceInfo(this, this, "<-serial number->", "<-device IMEI->", new DeviceInfoCallback() {
       @Override
       public void onResponse(JSONObject obj) {
 
@@ -141,14 +202,10 @@ The SDK supports several tests from which you can choose from. The currently sup
 
 | Test | TestType | Description |
 | ------ | ------ | ----------- |
-| Multi touch | multi_touch_v1 | This tests if the screen is capable of detecting gestures with multiple touch. |
-| Buttons | buttons_v1 |This test checks if the physical buttons of the phone are working properly |
-| Screen | device_front_video_v1 |This test is performed using a mirror to record a video to detect if there are any anomalies with the screen, if it's broken or if there are dead pixels in the screen.|
-| Sound system | speaker_recording_v1 | Plays and records a sound. |
-| Sound system - Earspeaker | earspeaker_v1 | The user is prompted to hear a word through the earspeaker of the device and write it. |
-| Sound system - Loudspeaker | loudspeaker_v1 | The user is prompted to hear a word through the loudspeaker of the device and write it. |
-| Read text | read_text_v1 | The user is asked to say and record a specific text. |
-| Charging | charging_v1 | The user is asked to plug in the charging cable. |
+| Multi touch | multi_touch_v2 | This tests if the screen is capable of detecting gestures with multiple touch. |
+| Buttons | buttons_v2 |This test checks if the physical buttons of the phone are working properly |
+| Screen | device_front_video_v2 |This test is performed using a mirror to record a video to detect if there are any anomalies with the screen, if it's broken or if there are dead pixels in the screen.|
+| Charging | charging_v2 | The user is asked to plug in the charging cable. |
 
  <br/><br/> 
 
@@ -163,11 +220,8 @@ The response obtained after the tests are finished include the tests_results as 
 ```swift
 {
   "tests_results" : {
-    "speaker_recording_v1" : {
-      "url" : "<url-to-uploaded-file>",
-      "success" : Bool
-    },
-    "buttons_v1" : {
+    "buttons" : {
+      "version" : String,
       "volume_down" : {
         "success" : Bool,
         "timestamp" : "<timestamp>"
@@ -176,49 +230,74 @@ The response obtained after the tests are finished include the tests_results as 
         "success" : Bool,
         "timestamp" : "<timestamp>"
       },
-      "screenshot" : {
-        "timestamp" : "<timestamp>",
-        "success" : Bool
-      },
       "timestamp" : "<timestamp>"
     },
-    "read_text_v1" : {
-      "timestamp" : "<timestamp>",
-      "url" : "<url-to-secure-location",
-      "success" : Bool,
-      "text" : "<word-presented>"
-    },
-    "earspeaker_v1" : {
-      "success" : Bool,
-      "audio_word" : "<audio-string-representation>",
-      "timestamp" : "<timestamp>",
-      "input_word" : "<string-input-by-user>"
-    },
-    "multi_touch_v1" : {
+    "multi_touch" : {
+      "version" : String,
       "timestamp" : "<timestamp>",
       "success" : Bool
     },
-    "charging_v1" : {
+    "charging" : {
+      "version" : String,
       "battery_state" : "charging",
       "battery_level" : 0.99000000953674316,
       "success" : Bool,
       "timestamp" : "<timestamp>"
     },
-    "device_front_video_v1" : {
+    "device_front_video" : {
+      "version" : String,
       "url" : "<url-to-uploaded-file>",
       "timestamp" : "<timestamp>",
-      "success" : Bool,
-      "start_qr_code" : "<start-qr-code-string>",
-      "end_qr_code" : "<end-qr-code-string>",
-      "md5" : "<md5-string-value>"
-    },
-    "loudspeaker_v1" : {
-      "timestamp" : "<timestamp>",
-      "input_word" : "<string-input-by-user>",
-      "success" : Bool,
-      "audio_word" : "<audio-string-representation>"
+      "success" : Bool
     }
+  },
+  "device_info" : {
+    "device_info_version" : String,
+    "used_disk_space" : String,
+    "thermal_state" : String,
+    "device_model_identifier" : String,
+    "app_version" : String,
+    "free_disk_space" : String,
+    "battery_state" : String,
+    "process_name" : String,
+    "battery_level" : Float,
+    "os_name" : String,
+    "ram_bytes" : Int,
+    "carriers" : [
+      {
+        "carrier_name" : String,
+        "allows_voip" : Bool,
+        "iso_country_code" : String,
+        "mobile_country_code" : String,
+        "mobile_network_code" : String
+      }
+    ],
+    "timestamp" : String,
+    "device_model" : String,
+    "os_version" : String,
+    "processor_count" : Int,
+    "os_version_detailed" : String,
+    "detected_ids" : [
+      {
+        "vendor_id" : String
+      }
+    ],
+    "received_ids" : [
+      {
+        "serial_number" : String,
+        "imei_values" : [ String ], 
+        "serial_number_image_url" : [ String ], 
+        "imei_image_url" : [ String ], 
+      }
+    ],
+    "uptime" : Timestamp,
+    "device_name" : String,
+    "device_model_commercial" : String,
+    "app_build_number" : String,
+    "active_processor_count" : Int,
+    "total_disk_space" : String
   }
+}
 ```
 
 </br>
@@ -229,11 +308,21 @@ The response for the DeviceInfo is a JSON object in the following format:
 
 ```swift
 {
-    "android_id" : String,
-    "imei_values" : [String],
-    "imei_image_url" : String,
+  "device_info_version" : String,
+    "detected_ids" : [
+      {
+        "android_id" : String
+      }
+    ],
+    "received_ids" : [
+      {
+        "serial_number" : String,
+        "imei_values" : [ String ], 
+        "serial_number_image_url" : [ String ], 
+        "imei_image_url" : [ String ], 
+      }
+    ],
     "brand" : String,
-    "thermal_state" : String,
     "device_name" : String,
     "device_model_commercial" : String,
     "device_model_identifier" : String,
@@ -289,7 +378,9 @@ The SDK supports several tests from which you can choose from. The currently sup
 | 401 | Invalid App ID |
 | 402  | Invalid API Key |
 | 403  | Invalid IMEI |
+| 403  | Invalid IMEI |
 | 406  | A server error occurred. | 
+| 407  | Invalid Serial Number | 
 
 
  <br/><br/> 
