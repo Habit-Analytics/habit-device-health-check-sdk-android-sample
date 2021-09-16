@@ -24,6 +24,15 @@ To integrate the Device Health SDK you will need request the **DeviceHealth.aar*
 2. Afterwards, add the following lines to the dependencies in _**build.gradle**_ of your _**main module. (app)**_
 
     ```
+        // Default plugins for build.graddle
+        implementation 'androidx.appcompat:appcompat:1.2.0'
+        implementation 'com.google.android.material:material:1.3.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+        testImplementation 'junit:junit:4.+'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+        
+        // Import the libraries for AAR
         compile files('libs/DeviceHealth.aar')
         implementation 'com.android.volley:volley:1.1.1'
         implementation 'com.google.zxing:core:3.4.1'
@@ -31,6 +40,7 @@ To integrate the Device Health SDK you will need request the **DeviceHealth.aar*
         implementation 'com.jakewharton:butterknife:10.2.3'
         implementation 'com.intuit.sdp:sdp-android:1.0.4'
         implementation 'com.scottyab:rootbeer-lib:0.1.0'
+   
     ```
 
 3. Click Sync Now button to rebuild the gradle.
