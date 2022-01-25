@@ -321,7 +321,9 @@ The response for the DeviceInfo is a JSON object in the following format:
   "device_info_version" : String,
     "detected_ids" : [
       {
-        "android_id" : String
+        "android_id" : String,
+	"serial_number" : String,
+        "imei_values" : [ String ]
       }
     ],
     "received_ids" : [
@@ -329,7 +331,7 @@ The response for the DeviceInfo is a JSON object in the following format:
         "serial_number" : String,
         "imei_values" : [ String ], 
         "serial_number_image_url" : [ String ], 
-        "imei_image_url" : [ String ], 
+        "imei_image_url" : [ String ]
       }
     ],
     "brand" : String,
