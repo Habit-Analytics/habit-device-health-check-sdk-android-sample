@@ -289,7 +289,9 @@ The response obtained after the tests are finished include the tests_results as 
     "os_version_detailed" : String,
     "detected_ids" : [
       {
-        "vendor_id" : String
+        "android_id" : String,
+	"serial_number" : String,
+        "imei_values" : [ String ]
       }
     ],
     "received_ids" : [
