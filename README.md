@@ -2,7 +2,7 @@
 
 Device Health is an SDK that allows you to easily perform tests to check the state of a device.
 
-> The minimum Android version supported is Android 6. 
+> The minimum Android version supported is Android 6.
 
 > Built with Android Studio 4.1.3
 
@@ -11,11 +11,11 @@ Device Health is an SDK that allows you to easily perform tests to check the sta
 ## Requesting an App ID and API Key
 
 To integrate the Device Health SDK you will need an **App ID** and an **API key**. For more information on how to obtain these please email us at developer@habit.io
- <br/><br/> 
-
+<br/><br/>
 
 # Installation
-You can integrate the SDK in your app by importing the **DeviceHealth.aar** directly into your project. 
+
+You can integrate the SDK in your app by importing the **DeviceHealth.aar** directly into your project.
 
 To integrate the Device Health SDK you will need request the **DeviceHealth.aar** library file as well as the **AppID** and the **API key**. For more information on how to obtain these please email us at developer@habit.io
 
@@ -23,50 +23,51 @@ To integrate the Device Health SDK you will need request the **DeviceHealth.aar*
 
 2. Afterwards, add the following lines to the dependencies in _**build.gradle**_ of your _**main module. (app)**_
 
-    ```
-        // Default plugins for build.graddle
-        implementation 'androidx.appcompat:appcompat:1.2.0'
-        implementation 'com.google.android.material:material:1.3.0'
-        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-        testImplementation 'junit:junit:4.+'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-        
-        // Import the libraries for AAR
-        compile files('libs/DeviceHealth.aar')
-        implementation 'com.android.volley:volley:1.1.1'
-        implementation 'com.google.zxing:core:3.4.1'
-        implementation 'com.budiyev.android:code-scanner:2.1.0'
-        implementation 'com.jakewharton:butterknife:10.2.3'
-        implementation 'com.intuit.sdp:sdp-android:1.0.4'
-        implementation 'com.scottyab:rootbeer-lib:0.1.0'
-   
-    ```
+   ```
+       // Default plugins for build.graddle
+       implementation 'androidx.appcompat:appcompat:1.2.0'
+       implementation 'com.google.android.material:material:1.3.0'
+       implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+       testImplementation 'junit:junit:4.+'
+       androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+       androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+       // Import the libraries for AAR
+       compile files('libs/DeviceHealth.aar')
+       implementation 'com.android.volley:volley:1.1.1'
+       implementation 'com.google.zxing:core:3.4.1'
+       implementation 'com.budiyev.android:code-scanner:2.1.0'
+       implementation 'com.jakewharton:butterknife:10.2.3'
+       implementation 'com.intuit.sdp:sdp-android:1.0.4'
+       implementation 'com.scottyab:rootbeer-lib:0.1.0'
+
+   ```
 
 3. Click Sync Now button to rebuild the gradle.
 
+<br/><br/>
 
- <br/><br/> 
 # Usage
-
 
  <br/>
 
 ## SDK Configuration
+
 ### **Language**
 
 The language of DeviceHealthSDK can be configured and currently supports **Portuguese** and **English** (default). Make sure you change this setting before starting to perform the tests. Usage is as follows:
 
 ```java
-// Configuration of SDK language: {en, pt} 
+// Configuration of SDK language: {en, pt}
 // this -> Context
 
 DeviceHealth.setLanguage(this, "en");
 ```
 
- <br/> 
+ <br/>
 
 ### **Theme Color**
+
 In order to provide for a smoother transition between the app and the test screens it is possible to change the overall theme color for the SDK. By default the theme color is blue but it can be changed to whatever **Color** you specify. Make sure you change this setting before starting to perform the tests.
 
 ```java
@@ -75,9 +76,11 @@ In order to provide for a smoother transition between the app and the test scree
 // this -> Context
     DeviceHealth.setThemeColor(this, Color.argb(255, 156, 34, 93));
 ```
+
  <br/>
 
- ### **Hide Start Screen**
+### **Hide Start Screen**
+
 Also, to provide a smoother transition between the app and the test screens it is possible to hide the SDK's start screen in case you want to show a custom in-app screen. Make sure you change this setting before starting to perform the tests.
 
 ```java
@@ -85,16 +88,23 @@ Also, to provide a smoother transition between the app and the test screens it i
 
     DeviceHealth.hideStartScreen(true);
 ```
- <br/><br/> 
+
+<br/><br/>
 
 ## Customization
+
 In order to achieve a seamingless integration of the SDK, we've created customization features that allow you to customize the SDK in a way that fits in better with your app.
 
- ### **General customization**
+### **General customization**
+
 The following general UI customizations can be done:
+
 ```java
 
       Customization customization = new Customization();
+
+      customization.setSkipTestButtonText("<- your custom skip button text ->");
+      customization.setNextButtonText("<- your custom next button text ->");
 
       ButtonStyle buttonStyle = new ButtonStyle();
       buttonStyle.setBackgroundColor(Color.rgb(255, 255, 0));
@@ -109,9 +119,11 @@ The following general UI customizations can be done:
       customization.setCustomNavigationBarTextColor(Color.rgb(0, 0, 0));
       customization.setCustomNavigationBarButtonsTextColor(Color.rgb(255, 255, 255));
 ```
+
  <br/>
 
- ### **Screen customization**
+### **Screen customization**
+
 Screens can be customized individually by creating CustomizableScreens and adding them to the Customization parameter. In the following snippet you can see an example on how to customize the Start Screen.
 
 ```java
@@ -139,9 +151,11 @@ Screens can be customized individually by creating CustomizableScreens and addin
       };
       customization.setCustomScreens(customScreens);
 ```
- <br/><br/> 
+
+<br/><br/>
 
 ## Tests Selection
+
 The tests to perform should be passed as a parameter in an array of strings. The available tests can be obtained using **ScreenType** as seen in the following snippet. _The order in which the tests are presented is the same order as they are defined in the array._
 If no tests are passed as a parameter, then it is assumed that all supported tests will be performed.
 
@@ -154,13 +168,13 @@ If no tests are passed as a parameter, then it is assumed that all supported tes
       };
 ```
 
+For more details on the what the different tests entail please check the [Available Tests](#available-tests) section of this guide.
 
-For more details on the what the different tests entail please check the [Available Tests](#available-tests) section of this guide. 
-
- <br/><br/> 
+<br/><br/>
 
 # Perform tests
-After all is setup you just need to call the following function with the appropriate parameters and the tests interface will appear and once they're finished a response will be received with all the results. For more details regarding the format of the response check the [Test Results](#tests-results) section. 
+
+After all is setup you just need to call the following function with the appropriate parameters and the tests interface will appear and once they're finished a response will be received with all the results. For more details regarding the format of the response check the [Test Results](#tests-results) section.
 
 You can optionally pass the IMEI of the device via parameter but otherwise the SDK will request the IMEI.
 
@@ -169,7 +183,7 @@ You can optionally pass the IMEI of the device via parameter but otherwise the S
 DeviceHealth.performTests(this, this, "<-your app id->", "<-your api key->", "<-serial number->", "<-device IMEI->", testsToPerform, new TestCallback() {
             @Override
             public void onResponse(JSONObject obj) {
-		
+
 		// obj == null : Canceled
 		// obj != null : Success
 
@@ -179,13 +193,13 @@ DeviceHealth.performTests(this, this, "<-your app id->", "<-your api key->", "<-
             }
         });
 ```
-<br/> 
 
+<br/>
 
-
-<br/> 
+<br/>
 
 ## Device Info
+
 If you wish to only obtain information about the device without running any tests you can do so by calling the following function:
 
 ```java
@@ -197,35 +211,33 @@ If you wish to only obtain information about the device without running any test
 
 		// obj == null : Canceled
 		// obj != null : Success
-    
+
       }
   });
 ```
 
 For more details regarding the format of the response check the [Device Info](#device-info) section.
 
- <br/><br/> 
+<br/><br/>
 
 # Available Tests
 
 The SDK supports several tests from which you can choose from. The currently supported tests are the following:
 
-| Test | TestType | Description |
-| ------ | ------ | ----------- |
-| Multi touch | multi_touch_v2 | This tests if the screen is capable of detecting gestures with multiple touch. |
-| Buttons | buttons_v2 |This test checks if the physical buttons of the phone are working properly |
-| Screen | device_front_video_v2 |This test is performed using a mirror to record a video to detect if there are any anomalies with the screen, if it's broken or if there are dead pixels in the screen.|
-| Charging | charging_v2 | The user is asked to plug in the charging cable. |
+| Test        | TestType              | Description                                                                                                                                                             |
+| ----------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Multi touch | multi_touch_v2        | This tests if the screen is capable of detecting gestures with multiple touch.                                                                                          |
+| Buttons     | buttons_v2            | This test checks if the physical buttons of the phone are working properly                                                                                              |
+| Screen      | device_front_video_v2 | This test is performed using a mirror to record a video to detect if there are any anomalies with the screen, if it's broken or if there are dead pixels in the screen. |
+| Charging    | charging_v2           | The user is asked to plug in the charging cable.                                                                                                                        |
 
- <br/><br/> 
-
+<br/><br/>
 
 # Results formats
 
 ## Tests Results
 
-
-The response obtained after the tests are finished include the tests_results as well as the device_info_v1 in a JSON object with the following format: 
+The response obtained after the tests are finished include the tests_results as well as the device_info_v1 in a JSON object with the following format:
 
 ```swift
 {
@@ -297,9 +309,9 @@ The response obtained after the tests are finished include the tests_results as 
     "received_ids" : [
       {
         "serial_number" : String,
-        "imei_values" : [ String ], 
-        "serial_number_image_url" : [ String ], 
-        "imei_image_url" : [ String ], 
+        "imei_values" : [ String ],
+        "serial_number_image_url" : [ String ],
+        "imei_image_url" : [ String ],
       }
     ],
     "uptime" : Timestamp,
@@ -315,8 +327,8 @@ The response obtained after the tests are finished include the tests_results as 
 </br>
 
 ## Device Info
-The response for the DeviceInfo is a JSON object in the following format: 
 
+The response for the DeviceInfo is a JSON object in the following format:
 
 ```swift
 {
@@ -331,8 +343,8 @@ The response for the DeviceInfo is a JSON object in the following format:
     "received_ids" : [
       {
         "serial_number" : String,
-        "imei_values" : [ String ], 
-        "serial_number_image_url" : [ String ], 
+        "imei_values" : [ String ],
+        "serial_number_image_url" : [ String ],
         "imei_image_url" : [ String ]
       }
     ],
@@ -379,23 +391,19 @@ The response for the DeviceInfo is a JSON object in the following format:
 }
 ```
 
-
-
 ## Status Codes
 
 The SDK supports several tests from which you can choose from. The currently supported tests are the following:
 
-| Code |  Description |
-| ------ | ------ | 
-| 200 | Test finished | 
-| 301 | Test was canceled by user 
-| 401 | Invalid App ID |
-| 402  | Invalid API Key |
-| 403  | Invalid IMEI |
-| 403  | Invalid IMEI |
-| 406  | A server error occurred. | 
-| 407  | Invalid Serial Number | 
+| Code | Description               |
+| ---- | ------------------------- |
+| 200  | Test finished             |
+| 301  | Test was canceled by user |
+| 401  | Invalid App ID            |
+| 402  | Invalid API Key           |
+| 403  | Invalid IMEI              |
+| 403  | Invalid IMEI              |
+| 406  | A server error occurred.  |
+| 407  | Invalid Serial Number     |
 
-
- <br/><br/> 
-
+<br/><br/>
