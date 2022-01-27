@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         customization.setButtonsStyle(buttonStyle);
 
         customization.setSkipTestButtonColor(Color.DKGRAY);
+        customization.setSkipTestButtonText("<- your custom skip button text ->");
+        customization.setNextButtonText("<- your custom next button text ->");
         customization.setProgressBarBackgroundColor(Color.rgb(0, 0, 0));
         customization.setProgressBarSelectedColor(Color.rgb(3, 198, 252));
         customization.setCustomNavigationBarBackgroundColor(Color.rgb(255, 255, 255));

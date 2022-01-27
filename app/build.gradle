@@ -10,8 +10,8 @@ android {
         applicationId "com.habit.devicetest"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 228
-        versionName "2.2.8"
+        versionCode 230
+        versionName "2.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
