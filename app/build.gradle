@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.habit.devicetest"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 30
-        versionCode 230
-        versionName "2.3.0"
+        versionCode 240
+        versionName "2.4.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

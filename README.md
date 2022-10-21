@@ -2,9 +2,9 @@
 
 Device Health is an SDK that allows you to easily perform tests to check the state of a device.
 
-> The minimum Android version supported is Android 6.
+> The minimum Android version supported is Android 8.
 
-> Built with Android Studio 4.1.3
+> Built with Android Studio Dolphin | 2021.3.1
 
  <br/>
 
